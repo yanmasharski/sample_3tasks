@@ -21,10 +21,13 @@ public class CardMover
     {
         var card = pileOrigin.PopCard();
         if (card == null)
+        {
+            SignalBus.Fire(new SignalSampleAceFinished());
             return;
-            
+        }
+
         var targetPosition = pileDestination.GetNextCardPositionWorld();
-        
+
         // Using DOTween to animate the card movement
         var cardTransform = card.transform;
         cardTransform.DOMoveX(targetPosition.x, ANIMATION_DURATION)

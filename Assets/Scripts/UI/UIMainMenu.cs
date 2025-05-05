@@ -16,17 +16,18 @@ public class UIMainMenu : MonoBehaviour
 
     private void OnButtonClickedAceOfShadows()
     {
+        SignalBus.Fire(new SignalSampleReset());
         SignalBus.Fire(new SignalSampleRequestedAce());
     }
 
     private void OnButtonClickedMagicWords()
     {
-        Debug.Log("OnButtonClickedMagicWords");
+        SignalBus.Fire(new SignalSampleReset());
     }
 
     private void OnButtonClickedPhoenixFlame()
     {
-        Debug.Log("OnButtonClickedPhoenixFlame");
+        SignalBus.Fire(new SignalSampleReset());
     }
-    
+
 }

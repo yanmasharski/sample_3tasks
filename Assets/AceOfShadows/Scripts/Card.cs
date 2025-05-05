@@ -13,6 +13,7 @@ public class Card : MonoBehaviour
 
     public void Initialize(int value)
     {
+        name = $"Card_{value + 1}";
         textMeshPro.text = (value + 1).ToString("000");
     }
 }

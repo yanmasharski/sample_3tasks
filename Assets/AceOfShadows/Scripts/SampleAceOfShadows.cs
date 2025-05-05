@@ -1,16 +1,20 @@
 using UnityEngine;
-
+using TMPro;
 public class SampleAceOfShadows : MonoBehaviour
 {
     [SerializeField] private Card cardPrefab;
     [SerializeField] private int initialCardCount;
     [SerializeField] private Pile pileOrigin;
     [SerializeField] private Pile pileDestination;
+    [SerializeField] private TextMeshPro labelFinishMessage;
 
     private CardMover cardMover;
 
-    private void RunSample()
+    private void OnSampleRequested(SignalSampleRequestedAce signal)
     {
+        labelFinishMessage.enabled = false;
+        gameObject.SetActive(true);
+
         // Object pool could be used here instead of destroying and instantiating
         pileOrigin.Clear();
         pileDestination.Clear();
@@ -26,18 +30,32 @@ public class SampleAceOfShadows : MonoBehaviour
         cardMover.StartTransfer();
     }
 
-    private void OnSampleRequested(SignalSampleRequestedAce signal)
+    private void OnSampleReset(SignalSampleReset signal)
     {
-        RunSample();
+        pileOrigin.Clear();
+        pileDestination.Clear();
+        cardMover = null;
+        gameObject.SetActive(false);
+        labelFinishMessage.enabled = false;
+    }
+
+    private void OnSampleAceFinished(SignalSampleAceFinished signal)
+    {
+        labelFinishMessage.enabled = true;
     }
 
     private void Awake()
     {
         SignalBus.Subscribe<SignalSampleRequestedAce>(OnSampleRequested);
+        SignalBus.Subscribe<SignalSampleReset>(OnSampleReset);
+        SignalBus.Subscribe<SignalSampleAceFinished>(OnSampleAceFinished);
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
         SignalBus.Unsubscribe<SignalSampleRequestedAce>(OnSampleRequested);
+        SignalBus.Unsubscribe<SignalSampleReset>(OnSampleReset);
+        SignalBus.Unsubscribe<SignalSampleAceFinished>(OnSampleAceFinished);
     }
 }
