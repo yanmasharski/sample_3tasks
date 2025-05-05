@@ -7,10 +7,13 @@ public class UIMainMenu : MonoBehaviour
     [SerializeField] private Button buttonMagicWords;
     [SerializeField] private Button buttonPhoenixFlame;
 
-    private void Awake()
+    public void Initialize()
     {
+        buttonAceOfShadows.onClick.RemoveAllListeners();
         buttonAceOfShadows.onClick.AddListener(OnButtonClickedAceOfShadows);
+        buttonMagicWords.onClick.RemoveAllListeners();
         buttonMagicWords.onClick.AddListener(OnButtonClickedMagicWords);
+        buttonPhoenixFlame.onClick.RemoveAllListeners();
         buttonPhoenixFlame.onClick.AddListener(OnButtonClickedPhoenixFlame);
     }
 
@@ -23,6 +26,7 @@ public class UIMainMenu : MonoBehaviour
     private void OnButtonClickedMagicWords()
     {
         SignalBus.Fire(new SignalSampleReset());
+        SignalBus.Fire(new SignalSampleRequestedWords());
     }
 
     private void OnButtonClickedPhoenixFlame()

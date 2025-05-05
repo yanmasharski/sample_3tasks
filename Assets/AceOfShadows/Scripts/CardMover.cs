@@ -22,7 +22,7 @@ public class CardMover
         var card = pileOrigin.PopCard();
         if (card == null)
         {
-            SignalBus.Fire(new SignalSampleAceFinished());
+            SignalBus.Fire(new SignalCardsTransitionFinished());
             return;
         }
 

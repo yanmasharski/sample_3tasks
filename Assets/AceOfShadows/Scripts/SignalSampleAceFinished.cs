@@ -1,3 +1,3 @@
-public class SignalSampleAceFinished : ISignal
+public class SignalCardsTransitionFinished : ISignal
 {
 }

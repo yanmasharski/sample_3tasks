@@ -10,6 +10,14 @@ public class SampleAceOfShadows : MonoBehaviour
 
     private CardMover cardMover;
 
+    public void Initialize()
+    {
+        SignalBus.Subscribe<SignalSampleRequestedAce>(OnSampleRequested);
+        SignalBus.Subscribe<SignalSampleReset>(OnSampleReset);
+        SignalBus.Subscribe<SignalCardsTransitionFinished>(OnSampleAceFinished);
+        gameObject.SetActive(false);
+    }
+
     private void OnSampleRequested(SignalSampleRequestedAce signal)
     {
         labelFinishMessage.enabled = false;
@@ -39,23 +47,15 @@ public class SampleAceOfShadows : MonoBehaviour
         labelFinishMessage.enabled = false;
     }
 
-    private void OnSampleAceFinished(SignalSampleAceFinished signal)
+    private void OnSampleAceFinished(SignalCardsTransitionFinished signal)
     {
         labelFinishMessage.enabled = true;
-    }
-
-    private void Awake()
-    {
-        SignalBus.Subscribe<SignalSampleRequestedAce>(OnSampleRequested);
-        SignalBus.Subscribe<SignalSampleReset>(OnSampleReset);
-        SignalBus.Subscribe<SignalSampleAceFinished>(OnSampleAceFinished);
-        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
         SignalBus.Unsubscribe<SignalSampleRequestedAce>(OnSampleRequested);
         SignalBus.Unsubscribe<SignalSampleReset>(OnSampleReset);
-        SignalBus.Unsubscribe<SignalSampleAceFinished>(OnSampleAceFinished);
+        SignalBus.Unsubscribe<SignalCardsTransitionFinished>(OnSampleAceFinished);
     }
 }
