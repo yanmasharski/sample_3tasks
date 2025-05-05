@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using TMPro;
 public class DebugFPS : MonoBehaviour
 {
 
@@ -8,6 +8,8 @@ public class DebugFPS : MonoBehaviour
     /// </summary>
     [SerializeField] private float updateIntervalSeconds = 1f;
 
+    [SerializeField] private TextMeshProUGUI label;
+
     private float fpsInInterval;
     private float fpsActual;
     private float accum = 0.0f;
@@ -15,12 +17,12 @@ public class DebugFPS : MonoBehaviour
     private float timeleft;
 
 
-#if !DEBUG
-    private void Awake()
-    {
-        Destroy(this);
-    }
-#endif
+// #if !DEBUG
+//     private void Awake()
+//     {
+//         Destroy(this);
+//     }
+// #endif
 
     private void Start()
     {
@@ -41,13 +43,12 @@ public class DebugFPS : MonoBehaviour
             accum = 0.0f;
             frames = 0;
         }
-    }
 
-    private void OnGUI()
-    {
-        var style = new GUIStyle();
-        style.fontSize = 26;
-        style.normal.textColor = Color.white;
-        GUI.Label(new Rect(30, 20, 160, 30), "FPS: " + fpsInInterval.ToString("F1") + " (" + fpsActual.ToString("F1") + ")", style);
+        if (label == null)
+        {
+            return;
+        }
+
+        label.text = "FPS: " + fpsInInterval.ToString("F1") + " (" + fpsActual.ToString("F1") + ")";
     }
 }
