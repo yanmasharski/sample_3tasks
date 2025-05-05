@@ -32,7 +32,8 @@ public class SamplePhoenixFlame : MonoBehaviour
         void NextColor()
         {
             material.DOColor(colors[colorIndex], "_TintColor", 5f)
-                    .OnComplete(() => {
+                    .OnComplete(() =>
+                    {
                         colorIndex = (colorIndex + 1) % colors.Length;
                         NextColor();
                     });

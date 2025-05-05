@@ -1,0 +1,38 @@
+<IfModule mod_mime.c>
+  # Recognize .gz as gzip-compressed
+  AddEncoding gzip .gz
+
+  # Ensure WebAssembly files get the right MIME type
+  AddType application/wasm .wasm
+  AddType application/wasm .wasm.gz
+
+  # (You probably already have JS/CSS lines; keep them too.)
+  AddType application/javascript .js .js.gz
+  AddType text/css               .css .css.gz
+</IfModule>
+
+<IfModule mod_headers.c>
+  # For any .wasm.gz request, set the correct headers
+  <FilesMatch "\.wasm\.gz$">
+    Header set Content-Type        "application/wasm"
+    Header set Content-Encoding    "gzip"
+    Header unset ETag
+    FileETag None
+  </FilesMatch>
+  
+  # (Optional) Cache these long-lived assets aggressively
+  <FilesMatch "\.(wasm|js|css)\.gz$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If the browser accepts gzip and the .gz version exists, serve it
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteCond %{REQUEST_FILENAME}\.gz -s
+
+  # Rewrite .wasm requests to .wasm.gz
+  RewriteRule ^(.+)\.(wasm|js|css)$ $1.$2.gz [QSA,L]
+</IfModule>
