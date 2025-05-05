@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using DG.Tweening;
 public class SamplePhoenixFlame : MonoBehaviour
 {
     [SerializeField] private Material material;
@@ -25,6 +25,18 @@ public class SamplePhoenixFlame : MonoBehaviour
     private void OnSampleRequestedFire(SignalSampleRequestedFire signal)
     {
         gameObject.SetActive(true);
+
+        int colorIndex = 0;
+        NextColor();
+
+        void NextColor()
+        {
+            material.DOColor(colors[colorIndex], "_TintColor", 5f)
+                    .OnComplete(() => {
+                        colorIndex = (colorIndex + 1) % colors.Length;
+                        NextColor();
+                    });
+        }
     }
 
     private void OnSampleReset(SignalSampleReset signal)
