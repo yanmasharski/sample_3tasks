@@ -9,7 +9,7 @@ public class ApplicationEntryPoint : MonoBehaviour
     [SerializeField] private UIMainMenu uiMainMenu;
     [SerializeField] private SampleAceOfShadows sampleAceOfShadows;
     [SerializeField] private SampleMagicWords sampleMagicWords;
-    // [SerializeField] private SamplePhoenixFlame samplePhoenixFlame;
+    [SerializeField] private SamplePhoenixFlame samplePhoenixFlame;
 
     private void Awake()
     {
@@ -17,6 +17,7 @@ public class ApplicationEntryPoint : MonoBehaviour
         uiMainMenu.Initialize();
         sampleAceOfShadows.Initialize();
         sampleMagicWords.Initialize();
+        samplePhoenixFlame.Initialize();
     }
     
 }

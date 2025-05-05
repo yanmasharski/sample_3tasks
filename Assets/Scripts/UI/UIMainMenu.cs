@@ -32,6 +32,7 @@ public class UIMainMenu : MonoBehaviour
     private void OnButtonClickedPhoenixFlame()
     {
         SignalBus.Fire(new SignalSampleReset());
+        SignalBus.Fire(new SignalSampleRequestedFire());
     }
 
 }
