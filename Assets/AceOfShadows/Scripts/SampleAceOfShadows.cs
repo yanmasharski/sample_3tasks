@@ -34,7 +34,7 @@ public class SampleAceOfShadows : MonoBehaviour
             pileOrigin.AddCard(card);
         }
 
-        cardMover = new CardMover(pileOrigin, pileDestination);
+        cardMover = new CardMover(pileOrigin, pileDestination, transform);
         cardMover.StartTransfer();
     }
 
